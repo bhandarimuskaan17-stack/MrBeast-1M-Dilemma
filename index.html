@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The $1M Dilemma · a MrBeast-inspired budget game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07102a;--card:#0f1b3f;--line:#233468;--tx:#f4f7ff;--mut:#9fb0dd;--y:#ffd60a;--b:#2f7bff;--g:#38e08c;--p:#ff5db1;--bad:#ff5470;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef3ff;--card:#fff;--line:#c9d6f5;--tx:#0a1330;--mut:#4a5a85;--y:#d99e00;--b:#1a5fe0;--g:#0c9b5a;--p:#d6277f;--bad:#d62a48}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(700px 420px at 90% -10%,color-mix(in srgb,var(--b) 40%,transparent),transparent),radial-gradient(500px 360px at 0 100%,color-mix(in srgb,var(--y) 14%,transparent),transparent)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}.disp{font-family:Bangers,Impact,'Arial Black',sans-serif;letter-spacing:.03em;font-weight:400}
+nav{position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:62px}
+.logo{text-decoration:none;font-size:26px;color:var(--y)}.logo span{color:var(--tx)}
+nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}nav a.l{padding:8px 14px;border-radius:99px;text-decoration:none;color:var(--mut);font-weight:500;font-size:14px}
+nav a.l[aria-current=page]{background:var(--y);color:#10132a}
+h1{font-size:clamp(44px,9vw,86px);line-height:.95;margin:.2em 0}h1 em{font-style:normal;color:var(--y);text-shadow:4px 4px 0 var(--b)}
+.lede{color:var(--mut);font-size:18px;max-width:640px}.hero{padding:56px 0 26px}.mut,small{color:var(--mut)}
+.btn{display:inline-flex;gap:8px;align-items:center;background:var(--y);color:#10132a;border:0;border-radius:99px;padding:14px 28px;font:700 16px Inter,sans-serif;cursor:pointer;text-decoration:none;box-shadow:0 5px 0 #8f7000;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #8f7000}.btn:disabled{opacity:.55;cursor:wait}.btn.ghost{background:transparent;color:var(--tx);border:1.5px solid var(--line);box-shadow:none;padding:9px 16px;font-size:14px}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.game{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin:16px 0 60px;align-items:start}
+@media(max-width:780px){.game,.two{grid-template-columns:1fr!important}}
+.pot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}.pot b{font-size:34px;color:var(--y)}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+.cat{margin-bottom:16px}.cat label{display:flex;justify-content:space-between;font-weight:500;font-size:15px}.cat label output{font-weight:700}
+.cat p{margin:0 0 2px;font-size:13px;color:var(--mut)}input[type=range]{width:100%;height:28px}
+.m{margin-bottom:14px}.m div{display:flex;justify-content:space-between;font-size:13px;color:var(--mut)}.m b{font-size:34px;color:var(--tx);line-height:1}
+.meter{height:14px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:4px}.meter i{display:block;height:100%;width:0;transition:width .45s}
+.big{font-size:70px;color:var(--y);line-height:1}.verdict{padding:14px;border-radius:12px;background:color-mix(in srgb,var(--b) 16%,transparent);border-left:4px solid var(--y);margin:14px 0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:60px}.facts .card{padding:20px}.facts h3{margin:.1em 0;font-size:22px}.facts p{margin:0;color:var(--mut);font-size:15px}
+form{display:grid;gap:15px}label.f{display:grid;gap:6px;font-weight:500;font-size:14px}
+input:not([type=range]),textarea{background:var(--bg);color:var(--tx);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit;width:100%}
+[aria-invalid=true]{border-color:var(--bad)!important}.err{color:var(--bad);font-size:13px;min-height:1em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.msg{padding:14px 16px;border-radius:12px;border:1px solid}.msg.ok{border-color:var(--g);background:color-mix(in srgb,var(--g) 14%,transparent)}.msg.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.avg{margin:10px 0}.avg div{display:flex;justify-content:space-between;font-size:14px}.avg .meter{height:12px}
+.wall{display:grid;gap:10px;margin-top:12px}.item{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);animation:in .4s}.item b{color:var(--y)}
+.tag{font-size:12px;padding:2px 10px;border:1px solid var(--line);border-radius:99px;color:var(--mut);margin-right:6px}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}.page{display:none}.page.on{display:block;animation:in .5s}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--mut);font-size:13px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style></head><body>
+<nav><div class="wrap"><a class="logo disp" href="#/" aria-label="The $1M Dilemma home">THE <span>$1M DILEMMA</span></a>
+<ul><li><a class="l" href="#/" data-r="home">Play</a></li><li><a class="l" href="#/verdict" data-r="verdict">Submit plan</a></li></ul></div></nav>
+<main>
+<section class="page" id="home"><div class="wrap">
+<div class="hero"><p class="mut" style="margin:0">UNOFFICIAL FAN PROJECT · INSPIRED BY MRBEAST</p>
+<h1 class="disp">You've got <em>$1,000,000.</em> Spend it.</h1>
+<p class="lede">MrBeast's videos ask a real question: how much money should go to spectacle that reaches millions, and how much straight to people in need? Split the million and see how your plan scores.</p>
+<a class="btn" href="#game">Start splitting ↓</a></div>
+<div class="game" id="game"><div class="card">
+<div class="pot"><span class="mut">LEFT TO ALLOCATE</span><b class="disp" id="left"></b></div>
+<div class="presets" role="group" aria-label="Presets"><button class="btn ghost" data-p="a">All impact</button><button class="btn ghost" data-p="b">Balanced</button><button class="btn ghost" data-p="c">All spectacle</button><button class="btn ghost" data-p="z">Reset</button></div>
+<div id="cats"></div></div>
+<div class="card" style="position:sticky;top:76px">
+<div class="m"><div><span>IMPACT</span><b class="disp" id="vi"></b></div><div class="meter"><i id="mi" style="background:var(--g)"></i></div></div>
+<div class="m"><div><span>REACH</span><b class="disp" id="vr"></b></div><div class="meter"><i id="mr" style="background:var(--p)"></i></div></div>
+<span class="mut">BEAST SCORE</span><div class="big disp" id="vs"></div>
+<div class="verdict" id="vd" aria-live="polite"></div>
+<a class="btn" href="#/verdict" id="sub">Submit my plan →</a></div></div>
+<div class="facts"><div class="card"><h3 class="disp">THE TENSION</h3><p>Pure charity has little reach. Pure spectacle has little impact. The best plans mix both.</p></div>
+<div class="card"><h3 class="disp">DIMINISHING RETURNS</h3><p>The first dollars in each area do the most good, so spreading money beats dumping it all in one place.</p></div>
+<div class="card"><h3 class="disp">IT'S A MODEL</h3><p>Scores come from a simplified formula for discussion, not measured data about real campaigns.</p></div></div>
+</div></section>
+
+<section class="page" id="verdict"><div class="wrap" style="padding:46px 20px 70px">
+<h1 class="disp" style="font-size:clamp(40px,8vw,68px)">SUBMIT <em>YOUR PLAN</em></h1>
+<p class="lede">Review your split, add your details and send it in.</p>
+<div class="two" style="margin-top:24px">
+<div class="card"><div id="mine" class="verdict" style="margin-top:0"></div>
+<form id="f" novalidate>
+<label class="f">Your name<input id="name" autocomplete="name" maxlength="60"><span class="err" id="e-name"></span></label>
+<label class="f">Email<input id="email" type="email" autocomplete="email" maxlength="120"><span class="err" id="e-email"></span></label>
+<label class="f">Why this split?<textarea id="why" rows="3" maxlength="240"></textarea><span class="err" id="e-why"></span></label>
+<button class="btn" id="go" type="submit">Submit plan</button><div id="status" role="status"></div></form></div>
+<div class="card"><h2 class="disp" style="font-size:28px;margin:0">YOUR PLAN</h2>
+<div id="avg"></div></div></div>
+</div></section></main>
+<footer><div class="wrap">Unofficial student project. Not affiliated with MrBeast or Beast Industries. Scores use a simplified model with diminishing returns and are for discussion only.</div></footer>
+<script>
+const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const K=[["food","Feed families","Meals through food banks",1,"var(--g)"],["water","Clean water","Wells and water access",1.1,"var(--b)"],["trees","Plant trees","Team Trees raised funds at $1 per tree",.9,"var(--g)"],["ocean","Clean the ocean","Team Seas worked at $1 per pound of trash",.9,"var(--b)"],["spec","Spectacle and production","Stunts, sets and giveaways that pull in viewers",0,"var(--p)"]];
+const fmt=n=>'$'+(n*1e4).toLocaleString('en-US');let A={food:0,water:0,trees:0,ocean:0,spec:0};
+const cats=$('#cats');
+K.forEach(k=>{const d=document.createElement('div');d.className='cat';d.innerHTML=`<label for="r-${k[0]}">${k[1]}<output id="o-${k[0]}"></output></label><p>${k[2]}</p><input type="range" id="r-${k[0]}" min="0" max="100" value="0" style="accent-color:${k[4]}">`;cats.appendChild(d);
+ d.querySelector('input').oninput=e=>{const o=Object.keys(A).filter(x=>x!==k[0]).reduce((s,x)=>s+A[x],0);let v=+e.target.value;if(v+o>100){v=100-o;e.target.value=v}A[k[0]]=v;upd()}});
+function calc(){const ref=4*Math.sqrt(25);let raw=0;K.forEach(k=>{if(k[3])raw+=k[3]*Math.sqrt(A[k[0]])});
+ const imp=Math.min(100,Math.round(raw/ref*80)),rch=Math.min(100,Math.round(12+88*Math.sqrt(A.spec/25))),sc=Math.round(Math.sqrt(imp*rch));return{imp,rch,sc}}
+function verdict(r,tot){if(tot<100)return'Allocate the full million to get a final verdict.';
+ if(A.spec===0)return'All impact, almost no reach. Few people would ever hear about it. Some spectacle would amplify the cause.';
+ if(A.spec>=70)return'Mostly spectacle. Big audience, but little of the money reaches people. Is the show the point?';
+ if(r.sc>=70)return'Well balanced. Money goes to real causes while enough spectacle brings people in.';
+ return'Decent plan. Spreading money across more causes would lift your impact.'}
+function upd(){const tot=Object.values(A).reduce((a,b)=>a+b,0),r=calc();
+ K.forEach(k=>$('#o-'+k[0]).textContent=fmt(A[k[0]]));$('#left').textContent=fmt(100-tot);
+ $('#vi').textContent=r.imp;$('#vr').textContent=r.rch;$('#vs').textContent=r.sc;$('#mi').style.width=r.imp+'%';$('#mr').style.width=r.rch+'%';
+ $('#vd').textContent=verdict(r,tot);$('#sub').style.opacity=tot===100?1:.55;cur={...A,tot,...r};
+ $('#avg').innerHTML=K.map(k=>`<div class="avg"><div><span>${k[1]}</span><b>${fmt(A[k[0]])}</b></div><div class="meter"><i style="width:${A[k[0]]}%;background:${k[4]}"></i></div></div>`).join('');
+ $('#mine').innerHTML=tot===100?`<b>Your plan:</b> Impact ${r.imp} · Reach ${r.rch} · Beast Score ${r.sc}`:'Go back to <b>Play</b> and allocate the full $1,000,000 before submitting.'}
+let cur={};
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const p={a:[25,25,25,25,0],b:[15,15,15,15,40],c:[0,0,0,0,100],z:[0,0,0,0,0]}[b.dataset.p];K.forEach((k,i)=>{A[k[0]]=p[i];$('#r-'+k[0]).value=p[i]});upd()});
+upd();
+function route(){const r=location.hash.startsWith('#/verdict')?'verdict':'home';
+ document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id===r));
+ document.querySelectorAll('a.l').forEach(a=>a.dataset.r===r?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+ if(r==='verdict'){upd();initDb()}if(!location.hash.includes('game'))scrollTo(0,0)}
+addEventListener('hashchange',route);
+const FORM_URL='PASTE_YOUR_FORMSPREE_URL_HERE';
+function initDb(){}
+$('#f').addEventListener('submit',async e=>{e.preventDefault();
+ const v={name:$('#name').value.trim(),email:$('#email').value.trim(),why:$('#why').value.trim()},er={};
+ if(v.name.length<2)er.name='Please enter your name.';
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email))er.email='Enter a valid email address.';
+ if(v.why.length<10)er.why='Explain your split in at least 10 characters.';
+ ['name','email','why'].forEach(k=>{$('#e-'+k).textContent=er[k]||'';$('#'+k).setAttribute('aria-invalid',!!er[k])});
+ const st=$('#status');
+ if(cur.tot!==100){st.innerHTML='<div class="msg bad">Allocate the full $1,000,000 on the Play page first.</div>';return}
+ if(Object.keys(er).length){$('#'+Object.keys(er)[0]).focus();return}
+ if(FORM_URL.startsWith('PASTE')){st.innerHTML='<div class="msg bad">Form not connected yet.</div>';return}
+ const b=$('#go');b.disabled=true;b.textContent='Sending…';st.innerHTML='';
+ try{const r=await fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({...v,food:A.food*1e4,water:A.water*1e4,trees:A.trees*1e4,ocean:A.ocean*1e4,spectacle:A.spec*1e4,impact:cur.imp,reach:cur.rch,beast_score:cur.sc})});
+  if(!r.ok)throw 0;st.innerHTML='<div class="msg ok">✓ Plan received! Thanks for sharing your split.</div>';$('#f').reset()}
+ catch(x){st.innerHTML='<div class="msg bad">Could not send your plan. Check your connection and try again.</div>'}
+ b.disabled=false;b.textContent='Submit plan'});
+route();
+</script></body></html>
